@@ -222,6 +222,10 @@
       '.formatSelect:hover {',
       '  border-color: rgba(140, 205, 255, 0.75);',
       '}',
+      '.formatSelect:disabled {',
+      '  cursor: wait;',
+      '  opacity: 0.72;',
+      '}',
       '.formatChevron {',
       '  position: absolute;',
       '  right: 10px;',
@@ -257,6 +261,10 @@
       '  background: rgba(255, 255, 255, 0.04);',
       '  cursor: pointer;',
       '}',
+      '.thumbButton:disabled {',
+      '  cursor: wait;',
+      '  opacity: 0.82;',
+      '}',
       '.thumbFrame {',
       '  position: relative;',
       '  width: 200px;',
@@ -277,6 +285,10 @@
       '  color: #f3f7fb;',
       '  cursor: pointer;',
       '  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);',
+      '}',
+      '.downloadButton:disabled {',
+      '  cursor: wait;',
+      '  opacity: 0.82;',
       '}',
       '.copyButton {',
       '  position: absolute;',
@@ -310,6 +322,10 @@
       '.copyButton.copySuccess {',
       '  color: #41d98b;',
       '  border-color: rgba(65, 217, 139, 0.68);',
+      '}',
+      '.panel.busy,',
+      '.panel.busy * {',
+      '  cursor: wait !important;',
       '}',
       '.spinIcon {',
       '  animation: deep-pick-spin 0.85s linear infinite;',
@@ -481,6 +497,16 @@
     const item = document.createElement('div');
     item.className = 'item';
 
+    function runBusyAction(action) {
+      if (callbacks.isBusy && callbacks.isBusy()) {
+        return;
+      }
+
+      Promise.resolve(callbacks.runAction(action)).catch(function handleError(error) {
+        callbacks.onError(error);
+      });
+    }
+
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'thumbButton';
@@ -488,8 +514,8 @@
     button.addEventListener('click', function handleClick(event) {
       event.preventDefault();
       event.stopPropagation();
-      Promise.resolve(callbacks.onPreviewClick(candidate, { keepOpen: false })).catch(function handleError(error) {
-        callbacks.onError(error);
+      runBusyAction(function executePreviewSave() {
+        return callbacks.onPreviewClick(candidate, { keepOpen: false });
       });
     });
 
@@ -521,7 +547,7 @@
         event.preventDefault();
         event.stopPropagation();
 
-        if (copyButton.disabled) {
+        if (copyButton.disabled || (callbacks.isBusy && callbacks.isBusy())) {
           return;
         }
 
@@ -535,7 +561,9 @@
         copyButton.title = 'Copying...';
         setButtonIcon(copyButton, createSpinnerIcon);
 
-        Promise.resolve(callbacks.onCopy(candidate)).then(function handleSuccess() {
+        Promise.resolve(callbacks.runAction(function executeCopy() {
+          return callbacks.onCopy(candidate);
+        })).then(function handleSuccess() {
           copyButton.disabled = false;
           copyButton.classList.add('copySuccess');
           copyButton.title = 'Copied';
@@ -559,8 +587,9 @@
       downloadButton.addEventListener('click', function handleDownloadClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        Promise.resolve(callbacks.onDownload(candidate, { keepOpen: true })).catch(function handleError(error) {
-          callbacks.onError(error);
+
+        runBusyAction(function executeDownload() {
+          return callbacks.onDownload(candidate, { keepOpen: true });
         });
       });
       thumbFrame.appendChild(downloadButton);
@@ -632,13 +661,37 @@
     positionPanel(overlay.panel, point, candidates);
   }
 
+  function setOverlayBusy(overlay, isBusy) {
+    overlay.panel.classList.toggle('busy', isBusy);
+
+    const controls = overlay.panel.querySelectorAll('button, select');
+    controls.forEach(function updateControlState(control) {
+      control.disabled = isBusy;
+    });
+  }
+
   function createOverlayController(callbacks) {
     const overlay = createOverlay();
     let lastSignature = '';
     let lastFixed = false;
+    let pendingActions = 0;
 
     function onError(error) {
       showToast(overlay, extractErrorMessage(error));
+    }
+
+    function syncBusyState() {
+      setOverlayBusy(overlay, pendingActions > 0);
+    }
+
+    function runAction(action) {
+      pendingActions += 1;
+      syncBusyState();
+
+      return Promise.resolve().then(action).finally(function finalizeAction() {
+        pendingActions = Math.max(0, pendingActions - 1);
+        syncBusyState();
+      });
     }
 
     overlay.formatSelect.addEventListener('change', function handleFormatChange(event) {
@@ -651,6 +704,7 @@
         lastFixed = false;
         overlay.toastStack.textContent = '';
         overlay.panel.style.display = 'none';
+        syncBusyState();
       },
       render: function render(candidates, point, options) {
         const signature = getCandidateSignature(candidates);
@@ -660,13 +714,18 @@
         overlay.formatSelect.value = callbacks.getSelectedFormat();
 
         renderCandidates(overlay, candidates, point, Object.assign({}, callbacks, {
-          onError: onError
+          isBusy: function isBusy() {
+            return pendingActions > 0;
+          },
+          onError: onError,
+          runAction: runAction
         }), shouldRebuild, {
           fixed: fixed,
           showActionButtons: fixed
         });
         lastSignature = signature;
         lastFixed = fixed;
+        syncBusyState();
       },
       move: function move(point, candidates) {
         if (!candidates.length) {
@@ -675,6 +734,7 @@
 
         overlay.panel.style.display = 'block';
         positionPanel(overlay.panel, point, candidates);
+        syncBusyState();
       }
     };
   }
