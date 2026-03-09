@@ -2,19 +2,11 @@
 
 A Manifest V3 Chrome extension that lets you preview extractable images under the cursor with a configurable modifier-key shortcut, then click a thumbnail to open the system save dialog. It is intended to work on arbitrary websites (if a site is unsupported or you hit a bug, please [tell me](https://github.com/xiaomingTang/deep-pick/issues)).
 
+![main](./public/main.png)
+
 ## Screenshots
 
-### Amazon
-
-![Amazon page preview](./public/amazon.png)
-
-### Pixiv
-
-![Pixiv page preview](./public/pixiv.png)
-
-### Options
-
-![Options page](./public/options.png)
+![preview](./public/preview.png)
 
 ## Current Capabilities
 
