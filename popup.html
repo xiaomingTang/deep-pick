@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Pick Popup</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1e2430;
+        --muted: #556072;
+        --accent: #0f766e;
+        --accent-weak: rgba(15, 118, 110, 0.12);
+        --border: rgba(30, 36, 48, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        width: 360px;
+        min-height: 400px;
+        background: #fff;
+        color: var(--ink);
+        font: 14px/1.45 "Segoe UI", "PingFang SC", sans-serif;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.1;
+      }
+
+      p {
+        margin: 10px 0 0;
+        color: var(--muted);
+      }
+
+      .section {
+        margin-top: 18px;
+      }
+
+      .sectionTitle {
+        margin-bottom: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 13px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .card input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        accent-color: var(--accent);
+      }
+
+      .labelGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .labelGroup strong {
+        font-size: 14px;
+      }
+
+      .labelGroup span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .status {
+        min-height: 38px;
+        margin-top: 16px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: var(--accent-weak);
+        color: var(--muted);
+      }
+
+      .status.error {
+        background: rgba(180, 35, 24, 0.1);
+        color: #b42318;
+      }
+
+      .status.success {
+        color: var(--accent);
+      }
+
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Modifier Keys</h1>
+      <p>Click the Deep Pick icon and pick the trigger keys. Changes save immediately, and unchecked keys must stay released when using the picker.</p>
+
+      <div class="section">
+        <div class="sectionTitle">Trigger Combination</div>
+        <div class="grid">
+          <label class="card">
+            <input type="checkbox" name="modifier" value="ctrl" />
+            <span class="labelGroup">
+              <strong>Ctrl</strong>
+              <span>Windows / Linux</span>
+            </span>
+          </label>
+          <label class="card">
+            <input type="checkbox" name="modifier" value="shift" />
+            <span class="labelGroup">
+              <strong>Shift</strong>
+              <span>Add to the combo</span>
+            </span>
+          </label>
+          <label class="card">
+            <input type="checkbox" name="modifier" value="alt" />
+            <span class="labelGroup">
+              <strong>Alt</strong>
+              <span>Reduce site conflicts</span>
+            </span>
+          </label>
+          <label class="card">
+            <input type="checkbox" name="modifier" value="meta" />
+            <span class="labelGroup">
+              <strong>Meta</strong>
+              <span>Windows key / Command</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+    </main>
+
+    <script src="src/shared/settings.js"></script>
+    <script src="src/popup/main.js"></script>
+  </body>
+</html>

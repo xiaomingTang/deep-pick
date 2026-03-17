@@ -1,4 +1,4 @@
-(function initOptions(global) {
+(function initPopup(global) {
   const namespace = global.DeepPick || (global.DeepPick = {});
   const settings = namespace.settings;
 
@@ -12,6 +12,16 @@
     return document.getElementById('status');
   }
 
+  function getRawFormState() {
+    const raw = {};
+
+    for (const input of getModifierInputs()) {
+      raw[input.value] = input.checked;
+    }
+
+    return raw;
+  }
+
   function setStatus(message, type) {
     const node = getStatusNode();
     node.textContent = message || '';
@@ -19,13 +29,7 @@
   }
 
   function readFormState() {
-    const raw = {};
-
-    for (const input of getModifierInputs()) {
-      raw[input.value] = input.checked;
-    }
-
-    return settings.normalizeModifierConfig(raw);
+    return settings.normalizeModifierConfig(getRawFormState());
   }
 
   function writeFormState(modifiers) {
@@ -53,26 +57,27 @@
       .join(' + ');
   }
 
-  function handleSave() {
-    const modifiers = readFormState();
-    if (!validateSelection(modifiers)) {
+  function saveModifiers(modifiers, messagePrefix) {
+    return settings.saveSettings({ modifiers: modifiers }).then(function onSaved(savedSettings) {
+      setStatus(messagePrefix + describeModifiers(savedSettings.modifiers), 'success');
+    });
+  }
+
+  function handleModifierChange() {
+    const rawModifiers = getRawFormState();
+    if (!validateSelection(rawModifiers)) {
+      writeFormState(readFormState());
       setStatus('Select at least one modifier key.', 'error');
       return;
     }
 
-    settings.saveSettings({ modifiers: modifiers }).then(function onSaved(savedSettings) {
-      setStatus('Saved: ' + describeModifiers(savedSettings.modifiers), 'success');
-    });
-  }
-
-  function handleReset() {
-    writeFormState(settings.defaultModifiers);
-    setStatus('Defaults restored: ' + describeModifiers(settings.defaultModifiers), 'success');
+    saveModifiers(settings.normalizeModifierConfig(rawModifiers), 'Saved: ');
   }
 
   function mount() {
-    document.getElementById('saveButton').addEventListener('click', handleSave);
-    document.getElementById('resetButton').addEventListener('click', handleReset);
+    for (const input of getModifierInputs()) {
+      input.addEventListener('change', handleModifierChange);
+    }
 
     settings.loadSettings().then(function onLoaded(loadedSettings) {
       writeFormState(loadedSettings.modifiers);

@@ -34,7 +34,7 @@ A Manifest V3 Chrome extension that lets you preview extractable images under th
 
 ## Usage
 
-- Configure the modifier-key shortcut on the extension's options page.
+- Click the extension icon to configure the modifier-key shortcut in the popup.
 - Hold the configured modifier keys and move the mouse to see a live preview.
 - Press the configured modifier keys and click to pin the preview at the current point.
 - Click a thumbnail in the preview to open the save dialog.
