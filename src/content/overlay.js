@@ -630,6 +630,7 @@
     const url = document.createElement('div');
     url.className = 'url';
     url.textContent = candidate.url;
+    url.title = candidate.url;
 
     meta.append(dimensions, url);
     item.append(button, meta);
