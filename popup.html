@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Pick Popup</title>
+    <title data-i18n="popupDocumentTitle">Deep Pick Popup</title>
     <style>
       :root {
         color-scheme: light;
@@ -115,38 +115,38 @@
   </head>
   <body>
     <main class="panel">
-      <h1>Modifier Keys</h1>
-      <p>Click the Deep Pick icon and pick the trigger keys. Changes save immediately, and unchecked keys must stay released when using the picker.</p>
+      <h1 data-i18n="popupHeading">Modifier Keys</h1>
+      <p data-i18n="popupDescription">Click the Deep Pick icon and pick the trigger keys. Changes save immediately, and unchecked keys must stay released when using the picker.</p>
 
       <div class="section">
-        <div class="sectionTitle">Trigger Combination</div>
+        <div class="sectionTitle" data-i18n="popupTriggerSectionTitle">Trigger Combination</div>
         <div class="grid">
           <label class="card">
             <input type="checkbox" name="modifier" value="ctrl" />
             <span class="labelGroup">
-              <strong>Ctrl</strong>
-              <span>Windows / Linux</span>
+              <strong data-i18n="popupCardCtrlTitle">Ctrl</strong>
+              <span data-i18n="popupCardCtrlHint">Windows / Linux</span>
             </span>
           </label>
           <label class="card">
             <input type="checkbox" name="modifier" value="shift" />
             <span class="labelGroup">
-              <strong>Shift</strong>
-              <span>Add to the combo</span>
+              <strong data-i18n="popupCardShiftTitle">Shift</strong>
+              <span data-i18n="popupCardShiftHint">Add to the combo</span>
             </span>
           </label>
           <label class="card">
             <input type="checkbox" name="modifier" value="alt" />
             <span class="labelGroup">
-              <strong>Alt</strong>
-              <span>Reduce site conflicts</span>
+              <strong data-i18n="popupCardAltTitle">Alt</strong>
+              <span data-i18n="popupCardAltHint">Reduce site conflicts</span>
             </span>
           </label>
           <label class="card">
             <input type="checkbox" name="modifier" value="meta" />
             <span class="labelGroup">
-              <strong>Meta</strong>
-              <span>Windows key / Command</span>
+              <strong data-i18n="popupCardMetaTitle">Meta</strong>
+              <span data-i18n="popupCardMetaHint">Windows key / Command</span>
             </span>
           </label>
         </div>
@@ -155,6 +155,7 @@
       <div id="status" class="status"></div>
     </main>
 
+    <script src="src/shared/i18n.js"></script>
     <script src="src/shared/settings.js"></script>
     <script src="src/popup/main.js"></script>
   </body>

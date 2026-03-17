@@ -1,7 +1,14 @@
 (function initDownloads(global) {
   const namespace = global.DeepPick || (global.DeepPick = {});
   const constants = namespace.constants;
+  const i18n = namespace.i18n;
   const urlUtils = namespace.url;
+
+  function t(key, substitutions, fallback) {
+    return i18n && typeof i18n.t === 'function'
+      ? i18n.t(key, substitutions, fallback)
+      : (fallback || key);
+  }
 
   function escapeRegex(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -34,12 +41,12 @@
     });
 
     if (!response.ok) {
-      throw new Error('image fetch failed with status ' + response.status);
+      throw new Error(t('backgroundImageFetchFailedStatus', String(response.status), 'image fetch failed with status ' + response.status));
     }
 
     const contentType = response.headers.get('content-type') || '';
     if (!contentType.toLowerCase().startsWith('image/')) {
-      throw new Error('response is not an image: ' + contentType);
+      throw new Error(t('backgroundResponseNotImage', contentType, 'response is not an image: ' + contentType));
     }
 
     const filename = urlUtils.ensureFilenameExtension(urlUtils.filenameFromUrl(payload.url), contentType);
@@ -95,7 +102,7 @@
 
   async function triggerDownload(payload) {
     if (!payload || (!payload.url && !payload.dataUrl)) {
-      throw new Error('missing image url');
+      throw new Error(t('backgroundMissingImageUrl', undefined, 'missing image url'));
     }
 
     const referer = payload.pageUrl || payload.referrer || '';

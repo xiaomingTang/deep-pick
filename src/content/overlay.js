@@ -2,6 +2,13 @@
   const namespace = global.DeepPick || (global.DeepPick = {});
   const constants = namespace.constants;
   const downloadClient = namespace.downloadClient;
+  const i18n = namespace.i18n;
+
+  function t(key, substitutions, fallback) {
+    return i18n && typeof i18n.t === 'function'
+      ? i18n.t(key, substitutions, fallback)
+      : (fallback || key);
+  }
 
   function getCandidateSignature(candidates) {
     return candidates.map(function mapCandidate(candidate) {
@@ -11,7 +18,7 @@
 
   function formatDimensions(width, height) {
     if (!width || !height) {
-      return 'Loading dimensions';
+      return t('overlayLoadingDimensions', undefined, 'Loading dimensions');
     }
 
     return width + ' x ' + height;
@@ -112,7 +119,7 @@
 
   function extractErrorMessage(error) {
     if (!error) {
-      return 'Action failed.';
+      return t('overlayActionFailed', undefined, 'Action failed.');
     }
 
     if (typeof error === 'string') {
@@ -123,7 +130,7 @@
       return error.message;
     }
 
-    return 'Action failed.';
+    return t('overlayActionFailed', undefined, 'Action failed.');
   }
 
   function createOverlay() {
@@ -382,7 +389,7 @@
     const formatSelect = document.createElement('select');
     formatSelect.className = 'formatSelect';
     [
-      { value: 'original', label: 'Original' },
+      { value: 'original', label: t('overlayFormatOriginal', undefined, 'Original') },
       { value: 'jpg', label: 'jpg' },
       { value: 'png', label: 'png' }
     ].forEach(function appendOption(optionInfo) {
@@ -510,7 +517,7 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'thumbButton';
-    button.title = 'Save image';
+    button.title = t('overlayPreviewSaveTitle', undefined, 'Save image');
     button.addEventListener('click', function handleClick(event) {
       event.preventDefault();
       event.stopPropagation();
@@ -523,7 +530,7 @@
     thumbFrame.className = 'thumbFrame';
 
     const image = document.createElement('img');
-    image.alt = 'Image preview';
+    image.alt = t('overlayImageAlt', undefined, 'Image preview');
     image.src = candidate.url;
     image.referrerPolicy = 'strict-origin-when-cross-origin';
     thumbFrame.appendChild(image);
@@ -535,13 +542,13 @@
       function resetCopyButton() {
         copyButton.disabled = false;
         copyButton.classList.remove('copySuccess');
-        copyButton.title = 'Copy image to clipboard';
+        copyButton.title = t('overlayCopyTitle', undefined, 'Copy image to clipboard');
         setButtonIcon(copyButton, createCopyIcon);
       }
 
       copyButton.type = 'button';
       copyButton.className = 'copyButton';
-      copyButton.title = 'Copy image to clipboard';
+      copyButton.title = t('overlayCopyTitle', undefined, 'Copy image to clipboard');
       setButtonIcon(copyButton, createCopyIcon);
       copyButton.addEventListener('click', function handleCopyClick(event) {
         event.preventDefault();
@@ -558,7 +565,7 @@
 
         copyButton.disabled = true;
         copyButton.classList.remove('copySuccess');
-        copyButton.title = 'Copying...';
+        copyButton.title = t('overlayCopyingTitle', undefined, 'Copying...');
         setButtonIcon(copyButton, createSpinnerIcon);
 
         Promise.resolve(callbacks.runAction(function executeCopy() {
@@ -566,7 +573,7 @@
         })).then(function handleSuccess() {
           copyButton.disabled = false;
           copyButton.classList.add('copySuccess');
-          copyButton.title = 'Copied';
+          copyButton.title = t('overlayCopiedTitle', undefined, 'Copied');
           setButtonIcon(copyButton, createCheckIcon);
           restoreCopyIconTimer = global.setTimeout(function handleRestore() {
             restoreCopyIconTimer = 0;
@@ -582,7 +589,7 @@
       const downloadButton = document.createElement('button');
       downloadButton.type = 'button';
       downloadButton.className = 'downloadButton';
-      downloadButton.title = 'Download and keep preview open';
+      downloadButton.title = t('overlayDownloadKeepOpenTitle', undefined, 'Download and keep preview open');
       downloadButton.appendChild(createDownloadIcon());
       downloadButton.addEventListener('click', function handleDownloadClick(event) {
         event.preventDefault();
@@ -645,12 +652,14 @@
       return;
     }
 
-    overlay.title.textContent = candidates.length === 1 ? 'Image Preview' : 'Image Preview (' + candidates.length + ')';
+    overlay.title.textContent = candidates.length === 1
+      ? t('overlayTitleSingle', undefined, 'Image Preview')
+      : t('overlayTitleMultiple', String(candidates.length), 'Image Preview (' + candidates.length + ')');
 
     if (options && options.fixed) {
-      overlay.hint.textContent = 'You can also click a preview to download it';
+      overlay.hint.textContent = t('overlayHintPinned', undefined, 'You can also click a preview to download it');
     } else {
-      overlay.hint.textContent = 'Left-click to pin this preview';
+      overlay.hint.textContent = t('overlayHintUnpinned', undefined, 'Left-click to pin this preview');
     }
 
     if (shouldRebuild) {

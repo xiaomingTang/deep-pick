@@ -1,0 +1,178 @@
+{
+  "extName": {
+    "message": "Deep Pick"
+  },
+  "extDescription": {
+    "message": "Preview and save images under the cursor with Ctrl+Shift."
+  },
+  "actionTitle": {
+    "message": "Deep Pick Settings"
+  },
+  "popupDocumentTitle": {
+    "message": "Deep Pick Popup"
+  },
+  "popupHeading": {
+    "message": "Modifier Keys"
+  },
+  "popupDescription": {
+    "message": "Click the Deep Pick icon and pick the trigger keys. Changes save immediately, and unchecked keys must stay released when using the picker."
+  },
+  "popupTriggerSectionTitle": {
+    "message": "Trigger Combination"
+  },
+  "popupCardCtrlTitle": {
+    "message": "Ctrl"
+  },
+  "popupCardCtrlHint": {
+    "message": "Windows / Linux"
+  },
+  "popupCardShiftTitle": {
+    "message": "Shift"
+  },
+  "popupCardShiftHint": {
+    "message": "Add to the combo"
+  },
+  "popupCardAltTitle": {
+    "message": "Alt"
+  },
+  "popupCardAltHint": {
+    "message": "Reduce site conflicts"
+  },
+  "popupCardMetaTitle": {
+    "message": "Meta"
+  },
+  "popupCardMetaHint": {
+    "message": "Windows key / Command"
+  },
+  "popupStatusSelectAtLeastOne": {
+    "message": "Select at least one modifier key."
+  },
+  "popupStatusSaved": {
+    "message": "Saved: $1",
+    "placeholders": {
+      "combination": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatusCurrent": {
+    "message": "Current combination: $1",
+    "placeholders": {
+      "combination": {
+        "content": "$1"
+      }
+    }
+  },
+  "modifierCtrlLabel": {
+    "message": "Ctrl"
+  },
+  "modifierShiftLabel": {
+    "message": "Shift"
+  },
+  "modifierAltLabel": {
+    "message": "Alt"
+  },
+  "modifierMetaLabel": {
+    "message": "Meta"
+  },
+  "overlayLoadingDimensions": {
+    "message": "Loading dimensions"
+  },
+  "overlayActionFailed": {
+    "message": "Action failed."
+  },
+  "overlayFormatOriginal": {
+    "message": "Original"
+  },
+  "overlayPreviewSaveTitle": {
+    "message": "Save image"
+  },
+  "overlayImageAlt": {
+    "message": "Image preview"
+  },
+  "overlayCopyTitle": {
+    "message": "Copy image to clipboard"
+  },
+  "overlayCopyingTitle": {
+    "message": "Copying..."
+  },
+  "overlayCopiedTitle": {
+    "message": "Copied"
+  },
+  "overlayDownloadKeepOpenTitle": {
+    "message": "Download and keep preview open"
+  },
+  "overlayTitleSingle": {
+    "message": "Image Preview"
+  },
+  "overlayTitleMultiple": {
+    "message": "Image Preview ($1)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overlayHintPinned": {
+    "message": "You can also click a preview to download it"
+  },
+  "overlayHintUnpinned": {
+    "message": "Left-click to pin this preview"
+  },
+  "runtimeReloadedPage": {
+    "message": "The extension was just reloaded, and this page is still using the old script. Refresh the page and try again."
+  },
+  "runtimeRequestFailed": {
+    "message": "Request failed."
+  },
+  "runtimeUnableDecodeImage": {
+    "message": "Unable to decode the image."
+  },
+  "runtimeImageRequestFailedStatus": {
+    "message": "Image request failed with status $1.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "runtimeResponseNotImage": {
+    "message": "The response was not an image: $1",
+    "placeholders": {
+      "contentType": {
+        "content": "$1"
+      }
+    }
+  },
+  "runtimePreviewImageMissing": {
+    "message": "Preview image data is missing."
+  },
+  "runtimeClipboardUnavailable": {
+    "message": "The Clipboard API is unavailable."
+  },
+  "backgroundPreviewResolveFailed": {
+    "message": "preview resolve failed"
+  },
+  "backgroundDownloadFailed": {
+    "message": "download failed"
+  },
+  "backgroundImageFetchFailedStatus": {
+    "message": "image fetch failed with status $1",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "backgroundResponseNotImage": {
+    "message": "response is not an image: $1",
+    "placeholders": {
+      "contentType": {
+        "content": "$1"
+      }
+    }
+  },
+  "backgroundMissingImageUrl": {
+    "message": "missing image url"
+  }
+}

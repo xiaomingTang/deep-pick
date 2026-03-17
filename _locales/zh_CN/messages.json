@@ -1,0 +1,178 @@
+{
+  "extName": {
+    "message": "Deep Pick"
+  },
+  "extDescription": {
+    "message": "使用 Ctrl+Shift 预览并保存光标下的图片。"
+  },
+  "actionTitle": {
+    "message": "Deep Pick 设置"
+  },
+  "popupDocumentTitle": {
+    "message": "Deep Pick 弹窗"
+  },
+  "popupHeading": {
+    "message": "组合键设置"
+  },
+  "popupDescription": {
+    "message": "点击 Deep Pick 图标并选择触发按键。修改会立即保存；使用取图器时，未勾选的按键必须保持松开。"
+  },
+  "popupTriggerSectionTitle": {
+    "message": "触发组合"
+  },
+  "popupCardCtrlTitle": {
+    "message": "Ctrl"
+  },
+  "popupCardCtrlHint": {
+    "message": "Windows / Linux"
+  },
+  "popupCardShiftTitle": {
+    "message": "Shift"
+  },
+  "popupCardShiftHint": {
+    "message": "加入组合键"
+  },
+  "popupCardAltTitle": {
+    "message": "Alt"
+  },
+  "popupCardAltHint": {
+    "message": "减少与站点快捷键冲突"
+  },
+  "popupCardMetaTitle": {
+    "message": "Meta"
+  },
+  "popupCardMetaHint": {
+    "message": "Windows 键 / Command"
+  },
+  "popupStatusSelectAtLeastOne": {
+    "message": "至少选择一个修饰键。"
+  },
+  "popupStatusSaved": {
+    "message": "已保存：$1",
+    "placeholders": {
+      "combination": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupStatusCurrent": {
+    "message": "当前组合：$1",
+    "placeholders": {
+      "combination": {
+        "content": "$1"
+      }
+    }
+  },
+  "modifierCtrlLabel": {
+    "message": "Ctrl"
+  },
+  "modifierShiftLabel": {
+    "message": "Shift"
+  },
+  "modifierAltLabel": {
+    "message": "Alt"
+  },
+  "modifierMetaLabel": {
+    "message": "Meta"
+  },
+  "overlayLoadingDimensions": {
+    "message": "正在读取尺寸"
+  },
+  "overlayActionFailed": {
+    "message": "操作失败。"
+  },
+  "overlayFormatOriginal": {
+    "message": "原始格式"
+  },
+  "overlayPreviewSaveTitle": {
+    "message": "保存图片"
+  },
+  "overlayImageAlt": {
+    "message": "图片预览"
+  },
+  "overlayCopyTitle": {
+    "message": "复制图片到剪贴板"
+  },
+  "overlayCopyingTitle": {
+    "message": "正在复制..."
+  },
+  "overlayCopiedTitle": {
+    "message": "已复制"
+  },
+  "overlayDownloadKeepOpenTitle": {
+    "message": "下载并保持预览打开"
+  },
+  "overlayTitleSingle": {
+    "message": "图片预览"
+  },
+  "overlayTitleMultiple": {
+    "message": "图片预览（$1）",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overlayHintPinned": {
+    "message": "也可以点击预览图直接下载"
+  },
+  "overlayHintUnpinned": {
+    "message": "左键点击可固定当前预览"
+  },
+  "runtimeReloadedPage": {
+    "message": "扩展刚刚被重新加载，这个页面仍在使用旧脚本。请刷新页面后重试。"
+  },
+  "runtimeRequestFailed": {
+    "message": "请求失败。"
+  },
+  "runtimeUnableDecodeImage": {
+    "message": "无法解码该图片。"
+  },
+  "runtimeImageRequestFailedStatus": {
+    "message": "图片请求失败，状态码：$1。",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "runtimeResponseNotImage": {
+    "message": "返回内容不是图片：$1",
+    "placeholders": {
+      "contentType": {
+        "content": "$1"
+      }
+    }
+  },
+  "runtimePreviewImageMissing": {
+    "message": "缺少预览图片数据。"
+  },
+  "runtimeClipboardUnavailable": {
+    "message": "当前环境不支持剪贴板 API。"
+  },
+  "backgroundPreviewResolveFailed": {
+    "message": "解析预览图片失败"
+  },
+  "backgroundDownloadFailed": {
+    "message": "下载失败"
+  },
+  "backgroundImageFetchFailedStatus": {
+    "message": "图片获取失败，状态码：$1",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "backgroundResponseNotImage": {
+    "message": "返回内容不是图片：$1",
+    "placeholders": {
+      "contentType": {
+        "content": "$1"
+      }
+    }
+  },
+  "backgroundMissingImageUrl": {
+    "message": "缺少图片地址"
+  }
+}

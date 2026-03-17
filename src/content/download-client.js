@@ -1,5 +1,6 @@
 (function initDownloadClient(global) {
   const namespace = global.DeepPick || (global.DeepPick = {});
+  const i18n = namespace.i18n;
   const messages = namespace.messages;
   const urlUtils = namespace.url;
 
@@ -14,8 +15,14 @@
     return Boolean(error && error.message && /Extension context invalidated/i.test(error.message));
   }
 
+  function t(key, substitutions, fallback) {
+    return i18n && typeof i18n.t === 'function'
+      ? i18n.t(key, substitutions, fallback)
+      : (fallback || key);
+  }
+
   function createContextInvalidatedError() {
-    return new Error('The extension was just reloaded, and this page is still using the old script. Refresh the page and try again.');
+    return new Error(t('runtimeReloadedPage', undefined, 'The extension was just reloaded, and this page is still using the old script. Refresh the page and try again.'));
   }
 
   function arrayBufferToDataUrl(buffer, contentType) {
@@ -50,7 +57,7 @@
           }
 
           if (!response || !response.ok) {
-            reject(new Error(response && response.error ? response.error : 'Request failed.'));
+            reject(new Error(response && response.error ? response.error : t('runtimeRequestFailed', undefined, 'Request failed.')));
             return;
           }
 
@@ -97,7 +104,7 @@
       };
 
       image.onerror = function handleError() {
-        reject(new Error('Unable to decode the image.'));
+        reject(new Error(t('runtimeUnableDecodeImage', undefined, 'Unable to decode the image.')));
       };
 
       image.src = dataUrl;
@@ -135,12 +142,12 @@
       redirect: 'follow'
     }).then(function handleResponse(response) {
       if (!response.ok) {
-        throw new Error('Image request failed with status ' + response.status + '.');
+        throw new Error(t('runtimeImageRequestFailedStatus', String(response.status), 'Image request failed with status ' + response.status + '.'));
       }
 
       const contentType = response.headers.get('content-type') || '';
       if (!contentType.toLowerCase().startsWith('image/')) {
-        throw new Error('The response was not an image: ' + contentType);
+        throw new Error(t('runtimeResponseNotImage', contentType, 'The response was not an image: ' + contentType));
       }
 
       return response.arrayBuffer().then(function handleBuffer(buffer) {
@@ -166,7 +173,7 @@
       url: payload.url
     }).then(function handleResolved(result) {
       if (!result || !result.dataUrl) {
-        throw new Error('Preview image data is missing.');
+        throw new Error(t('runtimePreviewImageMissing', undefined, 'Preview image data is missing.'));
       }
 
       return {
@@ -254,7 +261,7 @@
 
   function copyImage(payload) {
     if (!global.navigator.clipboard || typeof global.ClipboardItem !== 'function') {
-      return Promise.reject(new Error('The Clipboard API is unavailable.'));
+      return Promise.reject(new Error(t('runtimeClipboardUnavailable', undefined, 'The Clipboard API is unavailable.')));
     }
 
     return prepareImageAsset(payload).then(function handleAsset(asset) {
